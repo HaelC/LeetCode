@@ -1,17 +1,21 @@
 class Solution {
 public:
     vector<int> twoSum(vector<int>& nums, int target) {
-        unordered_map<int, int> hashtable;
+        unordered_map<int, int> hashmap;
+        vector<int> result;
+        
         for (int i = 0; i < nums.size(); ++i) {
-            if (hashtable.count(nums[i]) > 0) {
-                vector<int> result{hashtable[nums[i]], i};
-                return result;
+            if (hashmap.count(nums[i]) > 0) {
+                result.push_back(hashmap[nums[i]]);
+                result.push_back(i);
             }
             else {
-                hashtable[target - nums[i]] = i;
+                // keeps the complement (target-nums[i]) as the key
+                // so that we just need to go through the vector once
+                hashmap[target-nums[i]] = i;
             }
         }
-        vector<int> a;
-        return a;
+        
+        return result;
     }
 };
