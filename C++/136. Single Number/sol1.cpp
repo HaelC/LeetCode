@@ -1,18 +1,16 @@
 class Solution {
 public:
     int singleNumber(vector<int>& nums) {
-        unordered_set<int> hashset1;
-        unordered_set<int> hashset2;
-        for (auto num : nums) {
-            if (hashset1.count(num) > 0)
-                hashset2.insert(num);
-            else
-                hashset1.insert(num);
+        int sum = 0;
+        int setSum = 0;
+        unordered_set<int> hashset;
+        for (int num : nums) {
+            if (hashset.count(num) == 0) {
+                hashset.insert(num);
+                setSum += num;
+            }
+            sum += num;
         }
-        for (auto num : nums) {
-            if (hashset2.count(num) <= 0)
-                return num;
-        }
-        return 0;
+        return 2 * setSum - sum;
     }
 };
