@@ -10,29 +10,30 @@
 class Solution {
 public:
     bool isSymmetric(TreeNode* root) {
-        queue<TreeNode*> q;
-        
-        q.push(root);
-        while (!q.empty()) {
-            vector<int> level;
-            int size = q.size();
-            for (int i = 0; i < size; ++i) {
-                TreeNode* node = q.front();
-                q.pop();
-                if (!node)
-                    level.push_back(INT_MIN);
+        queue<TreeNode*> bfs;
+        bfs.push(root);
+        while (!bfs.empty()) {
+            int size = bfs.size();
+            vector<string> level;
+            for (int i = 0; i < size; i++) {
+                TreeNode* node = bfs.front();
+                bfs.pop();
+                if (node) {
+                    level.push_back(to_string(node->val));
+                    bfs.push(node->left);
+                    bfs.push(node->right);
+                }
                 else {
-                    level.push_back(node->val);
-                    q.push(node->left);
-                    q.push(node->right);
+                    level.push_back("");
                 }
             }
-            for (int j = 0; j < level.size() / 2; ++j) {
-                if (level[j] != level[level.size() - j - 1])
+            int n = level.size();
+            for (int i = 0; i < n / 2; i++) {
+                if (level[i] != level[n - i - 1]) {
                     return false;
+                }
             }
         }
-        
         return true;
     }
 };
