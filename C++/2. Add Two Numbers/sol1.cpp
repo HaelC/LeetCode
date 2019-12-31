@@ -9,38 +9,44 @@
 class Solution {
 public:
     ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
-        ListNode *head = new ListNode(0);
-        ListNode *result = head;
+        ListNode* head = new ListNode(0);
+        ListNode* curr = head;
+        ListNode* p1 = l1;
+        ListNode* p2 = l2;
+        
         int carry = 0;
-        while (l1 && l2) {
-            int add = l1->val + l2->val + carry;
-            ListNode *node = new ListNode(add % 10);
-            //node->val = add % 10;
-            carry = add / 10;
-            l1 = l1->next;
-            l2 = l2->next;
-            result->next = node;
-            result = result->next;
+        while (p1 && p2) {
+            int val = p1->val + p2->val + carry;
+            ListNode* node = new ListNode(val % 10);
+            carry = val / 10;
+            p1 = p1->next;
+            p2 = p2->next;
+            curr->next = node;
+            curr = curr->next;
         }
-        while (l1) {
-            int add = l1->val + carry;
-            ListNode *node = new ListNode(add % 10);
-            carry = add / 10;
-            l1 = l1->next;
-            result->next = node;
-            result = result->next;
+        
+        while (p1) {
+            int val = p1->val + carry;
+            ListNode* node = new ListNode(val % 10);
+            carry = val / 10;
+            p1 = p1->next;
+            curr->next = node;
+            curr = curr->next;
         }
-        while (l2) {
-            int add = l2->val + carry;
-            ListNode *node = new ListNode(add % 10);
-            carry = add / 10;
-            l2 = l2->next;
-            result->next = node;
-            result = result->next;
+        
+        while (p2) {
+            int val = p2->val + carry;
+            ListNode* node = new ListNode(val % 10);
+            carry = val / 10;
+            p2 = p2->next;
+            curr->next = node;
+            curr = curr->next;
         }
+        
         if (carry) {
-            ListNode *node = new ListNode(carry);
-            result->next = node;
+            ListNode* node = new ListNode(1);
+            curr->next = node;
+            curr = curr->next;
         }
         
         return head->next;

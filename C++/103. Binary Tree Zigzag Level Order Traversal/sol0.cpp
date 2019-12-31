@@ -19,20 +19,22 @@ public:
         bfs.push(root);
         while (!bfs.empty()) {
             int size = bfs.size();
-            vector<int> level;
+            vector<int> level(size);
             for (int i = 0; i < size; i++) {
                 TreeNode* node = bfs.front();
                 bfs.pop();
-                level.push_back(node->val);
+                if (leftToRight) {
+                    level[i] = node->val;
+                }
+                else {
+                    level[size - i - 1] = node->val;
+                }
                 if (node->left) {
                     bfs.push(node->left);
                 }
                 if (node->right) {
                     bfs.push(node->right);
                 }
-            }
-            if (!leftToRight) {
-                reverse(level.begin(), level.end());
             }
             leftToRight = !leftToRight;
             levels.push_back(level);
